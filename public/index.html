@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlowStock AI | Cosmetic Inventory</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✦</div>
+        <div><b>GlowStock</b><span>AI INVENTORY</span></div>
+      </div>
+      <nav>
+        <button class="nav active" data-page="dashboard">⌂ <span>Dashboard</span></button>
+        <button class="nav" data-page="products">▦ <span>Products</span></button>
+        <button class="nav" data-page="inventory">◈ <span>Inventory</span></button>
+        <button class="nav" data-page="suppliers">♢ <span>Suppliers</span></button>
+        <button class="nav" data-page="sales">₹ <span>Sales</span></button>
+        <button class="nav" data-page="ai">✦ <span>AI Insights</span><em>NEW</em></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="store-card"><small>STORE</small><strong>Glow Beauty Store</strong><span>Chennai • Main Branch</span></div>
+        <button class="settings">⚙ Settings</button>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="crumb">Inventory / <b id="pageTitle">Dashboard</b></div>
+        <div class="top-actions">
+          <span class="online"><i></i> AI Online</span>
+          <button class="icon-btn" onclick="showToast('No new notifications')">🔔<sup>3</sup></button>
+          <div class="avatar">JV</div>
+        </div>
+      </header>
+
+      <section class="content">
+        <div id="dashboard" class="page active-page">
+          <div class="hero">
+            <div><p class="eyebrow">AI-POWERED INVENTORY</p><h1>Good morning, Jaya 👋</h1><p>Your inventory is being monitored by GlowStock AI.</p></div>
+            <button class="primary" onclick="runAI()">✦ Run AI Analysis</button>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><span>Total Products</span><strong id="totalProducts">12</strong><small>Across 5 categories</small></div>
+            <div class="stat"><span>Inventory Value</span><strong id="inventoryValue">₹1,24,680</strong><small>Current stock value</small></div>
+            <div class="stat warning"><span>Low Stock</span><strong id="lowStock">3</strong><small>Need attention</small></div>
+            <div class="stat danger"><span>Expiring Soon</span><strong>4</strong><small>Within 90 days</small></div>
+          </div>
+
+          <div class="grid two">
+            <div class="panel ai-panel">
+              <div class="panel-head"><div><span class="ai-label">✦ AI INSIGHT</span><h2>Inventory Health</h2></div><span class="confidence">94% confidence</span></div>
+              <div class="health"><div class="ring"><b>82</b><small>/100</small></div><div><h3>Healthy inventory</h3><p>Most products have sufficient stock. AI detected <b>3 products</b> that may need replenishment soon.</p><button class="text-btn" onclick="go('ai')">View recommendations →</button></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><span class="muted">ALERTS</span><h2>Needs Attention</h2></div><button class="text-btn" onclick="go('inventory')">View all</button></div>
+              <div class="alert-list">
+                <div><i class="a-red">!</i><div><b>Vitamin C Face Serum</b><small>Only 7 units left • High demand</small></div><strong>Reorder</strong></div>
+                <div><i class="a-yellow">!</i><div><b>Dream Lengths Shampoo</b><small>9 units left • 14 minimum</small></div><strong>Review</strong></div>
+                <div><i class="a-yellow">!</i><div><b>Fit Me Foundation</b><small>12 units left • 15 minimum</small></div><strong>Review</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="panel">
+              <div class="panel-head"><div><span class="muted">SALES PERFORMANCE</span><h2>Category Overview</h2></div></div>
+              <div class="bars">
+                <div><span>Makeup</span><b style="width:88%"></b><strong>₹42.8K</strong></div>
+                <div><span>Skincare</span><b style="width:76%"></b><strong>₹36.2K</strong></div>
+                <div><span>Haircare</span><b style="width:51%"></b><strong>₹24.5K</strong></div>
+                <div><span>Fragrance</span><b style="width:34%"></b><strong>₹16.1K</strong></div>
+                <div><span>Body Care</span><b style="width:23%"></b><strong>₹10.9K</strong></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><span class="muted">RECENT ACTIVITY</span><h2>Latest Transactions</h2></div></div>
+              <div class="activity">
+                <div><span>OUT</span><div><b>Matte Lipstick</b><small>Invoice #GS-1048 • 2 units</small></div><strong>₹998</strong></div>
+                <div><span>IN</span><div><b>Face Wash</b><small>ABC Beauty Distributors • 20 units</small></div><strong>+20</strong></div>
+                <div><span>OUT</span><div><b>Vitamin C Face Serum</b><small>Invoice #GS-1047 • 3 units</small></div><strong>₹2,397</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="products" class="page">
+          <div class="section-title"><div><p class="eyebrow">CATALOG</p><h1>Products</h1><p>Manage your cosmetic product master.</p></div><button class="primary" onclick="openModal()">＋ Add Product</button></div>
+          <div class="toolbar"><input id="search" oninput="renderProducts()" placeholder="⌕ Search products, brands or SKU..."><select id="categoryFilter" onchange="renderProducts()"><option value="">All categories</option><option>Makeup</option><option>Skincare</option><option>Haircare</option><option>Fragrance</option><option>Body Care</option></select><button class="secondary" onclick="exportCSV()">↓ Export CSV</button></div>
+          <div class="panel table-wrap"><table><thead><tr><th>PRODUCT</th><th>CATEGORY</th><th>PRICE</th><th>STOCK</th><th>STATUS</th><th>EXPIRY</th><th></th></tr></thead><tbody id="productRows"></tbody></table></div>
+        </div>
+
+        <div id="inventory" class="page">
+          <div class="section-title"><div><p class="eyebrow">STOCK CONTROL</p><h1>Inventory</h1><p>Monitor stock levels, movement and expiry.</p></div><button class="primary" onclick="runAI()">✦ AI Stock Check</button></div>
+          <div class="stats mini"><div class="stat"><span>In Stock</span><strong>9</strong></div><div class="stat warning"><span>Low Stock</span><strong>3</strong></div><div class="stat danger"><span>Out of Stock</span><strong>1</strong></div></div>
+          <div class="panel table-wrap"><table><thead><tr><th>PRODUCT</th><th>ON HAND</th><th>MINIMUM</th><th>30-DAY SALES</th><th>AI FORECAST</th><th>ACTION</th></tr></thead><tbody id="inventoryRows"></tbody></table></div>
+        </div>
+
+        <div id="suppliers" class="page">
+          <div class="section-title"><div><p class="eyebrow">PURCHASING</p><h1>Suppliers</h1><p>Manage your cosmetic supply partners.</p></div><button class="primary" onclick="showToast('Supplier form ready for database integration')">＋ Add Supplier</button></div>
+          <div class="supplier-grid">
+            <div class="supplier-card"><div class="supplier-logo">AB</div><h3>ABC Beauty Distributors</h3><p>Makeup • Skincare</p><span>📞 +91 98765 43210</span><small>18 products supplied</small></div>
+            <div class="supplier-card"><div class="supplier-logo">BW</div><h3>Beauty World Wholesale</h3><p>Haircare • Body Care</p><span>📞 +91 91234 56789</span><small>12 products supplied</small></div>
+            <div class="supplier-card"><div class="supplier-logo">GC</div><h3>Glow Care Supplies</h3><p>Skincare • Fragrance</p><span>📞 +91 99887 66554</span><small>9 products supplied</small></div>
+          </div>
+        </div>
+
+        <div id="sales" class="page">
+          <div class="section-title"><div><p class="eyebrow">REVENUE</p><h1>Sales</h1><p>Track recent sales and product performance.</p></div><button class="primary" onclick="showToast('New sale screen ready')">＋ Record Sale</button></div>
+          <div class="stats"><div class="stat"><span>Today's Sales</span><strong>₹8,420</strong><small>+12.4% vs yesterday</small></div><div class="stat"><span>This Month</span><strong>₹1.31L</strong><small>186 invoices</small></div><div class="stat"><span>Avg. Order</span><strong>₹704</strong><small>+₹46 this month</small></div></div>
+          <div class="panel table-wrap"><table><thead><tr><th>INVOICE</th><th>PRODUCT</th><th>QTY</th><th>AMOUNT</th><th>DATE</th><th>STATUS</th></tr></thead><tbody>
+            <tr><td>#GS-1048</td><td><b>Matte Lipstick</b></td><td>2</td><td>₹998</td><td>Today, 10:42 AM</td><td><span class="badge good">Completed</span></td></tr>
+            <tr><td>#GS-1047</td><td><b>Vitamin C Face Serum</b></td><td>3</td><td>₹2,397</td><td>Today, 10:18 AM</td><td><span class="badge good">Completed</span></td></tr>
+            <tr><td>#GS-1046</td><td><b>Fit Me Foundation</b></td><td>1</td><td>₹699</td><td>Yesterday, 6:12 PM</td><td><span class="badge good">Completed</span></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div id="ai" class="page">
+          <div class="section-title"><div><p class="eyebrow">ARTIFICIAL INTELLIGENCE</p><h1>AI Insights</h1><p>Use inventory data to make smarter stock decisions.</p></div><button class="primary" onclick="runAI()">✦ Analyze Inventory</button></div>
+          <div class="ai-banner"><div class="spark">✦</div><div><h2>GlowStock AI is analyzing your inventory</h2><p>Sales velocity + stock level + minimum stock + expiry data are combined to generate recommendations.</p></div><span id="aiStatus">READY</span></div>
+          <div class="grid two">
+            <div class="panel"><div class="panel-head"><div><span class="ai-label">PREDICTION</span><h2>Products at Risk</h2></div></div><div id="riskList"></div></div>
+            <div class="panel"><div class="panel-head"><div><span class="ai-label">RECOMMENDATION</span><h2>Suggested Reorders</h2></div></div><div id="reorderList"></div></div>
+          </div>
+          <div class="panel assistant">
+            <div class="panel-head"><div><span class="ai-label">AI ASSISTANT</span><h2>Ask GlowStock AI</h2><p>Ask questions about your inventory in simple language.</p></div></div>
+            <div class="chat" id="chat"><div class="bot">✦ <span>Hello! I can help you understand stock, sales, expiry and reorder decisions.</span></div></div>
+            <div class="ask"><input id="question" placeholder="e.g. Which products should I reorder?"><button class="primary" onclick="askAI()">Ask AI</button></div>
+            <div class="quick"><button onclick="quickAsk('Which products are low in stock?')">Low stock</button><button onclick="quickAsk('What should I reorder?')">Reorder</button><button onclick="quickAsk('Which products are selling well?')">Sales trend</button><button onclick="quickAsk('Which products may expire soon?')">Expiry</button></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2>Add New Product</h2><p>Demo form — database integration can be connected next.</p><input id="newName" placeholder="Product name"><input id="newBrand" placeholder="Brand"><select id="newCat"><option>Makeup</option><option>Skincare</option><option>Haircare</option><option>Fragrance</option><option>Body Care</option></select><input id="newPrice" type="number" placeholder="Price"><input id="newStock" type="number" placeholder="Opening stock"><button class="primary full" onclick="addProduct()">Save Product</button></div></div>
+  <div id="toast"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
